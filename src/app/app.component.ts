@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { User } from './user';
-import { UserService } from './user.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+//import { User } from './user';
+//import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,25 @@ import { UserService } from './user.service';
 export class AppComponent {
   title = 'app';
 
-  constructor (private userSrv: UserService) {}
-  username = this.userSrv.user.username;
+  lForm: FormGroup;
+  post: any;
+  username: string = '';
+  password: string = '';
 
-  onSubmit() {
+  constructor (private fb: FormBuilder) {
+    this.lForm = fb.group({
+      'username': [null, Validators.required],
+      'password': [null, Validators.compose([
+        Validators.required, 
+        Validators.minLength(5)
+      ])],
+    });
+  }
+
+
+ 
+  logIn(post) {
+    this.username = post.username;
   }
 
 
